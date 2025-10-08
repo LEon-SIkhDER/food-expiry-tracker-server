@@ -1,0 +1,37 @@
+basic steps
+1. import express
+2. move express into a variable named "app" // to work 
+3. set port value/location 
+4. set default page / home page 
+5. set port to run
+
+basic step 2 setting cors // to transfer 
+1. setting cors 
+    1. require cors
+    2. app.use(cors())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
