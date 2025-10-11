@@ -35,14 +35,30 @@ async function run() {
         await client.connect();
         const foodCollection = client.db("foodExpiryDb").collection("foods")
 
-        app.push("/foods", (req, res)=>{
 
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        app.post("/foods", async (req, res) => {
+            const data = req.body
+            const result = await foodCollection.insertOne(data)
+            res.send(result)
         })
 
 
 
-        
+
 
 
 
@@ -65,7 +81,7 @@ async function run() {
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
-        await client.close();
+        // await client.close();
     }
 }
 run().catch(console.dir);
