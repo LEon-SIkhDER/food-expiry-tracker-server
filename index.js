@@ -35,6 +35,15 @@ async function run() {
         await client.connect();
         const foodCollection = client.db("foodExpiryDb").collection("foods")
 
+        app.get("/foods", async (req, res) => {
+            const skip = Number(req.query.skip) || 0
+            console.log(skip)
+            const total = await foodCollection.countDocuments();
+            const result = await foodCollection.find().skip(skip).limit(12).toArray()
+            res.send({ result, total })
+        })
+
+
 
 
 
