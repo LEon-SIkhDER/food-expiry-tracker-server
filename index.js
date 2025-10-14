@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express()
 
@@ -37,24 +37,19 @@ async function run() {
 
         app.get("/foods", async (req, res) => {
             const skip = Number(req.query.skip) || 0
-            console.log(skip)
+            // console.log(skip)
             const total = await foodCollection.countDocuments();
             const result = await foodCollection.find().skip(skip).limit(12).toArray()
             res.send({ result, total })
         })
 
+        app.get("/foods/:id", async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await foodCollection.findOne(query)
+            res.send(result)
 
-
-
-
-
-
-
-
-
-
-
-
+        })
 
 
 
@@ -67,6 +62,14 @@ async function run() {
 
 
 
+        app.put("/foods/:id", async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const data = req.body
+            const update = { $set: data }
+            const result = await foodCollection.updateOne(query, update)
+            res.send(result)
+        })
 
 
 
