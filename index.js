@@ -37,10 +37,17 @@ async function run() {
 
         app.get("/foods", async (req, res) => {
             const skip = Number(req.query.skip) || 0
-            // console.log(skip)
-            const total = await foodCollection.countDocuments();
-            const result = await foodCollection.find().skip(skip).limit(12).toArray()
-            res.send({ result, total })
+            const limit = Number(req.query.limit) || 0
+            const user = req.query.email
+            const query = {}
+            if (user) {
+                query.userEmail = user
+            }
+
+            const total = await foodCollection.countDocuments(query);
+            const result = await foodCollection.find(query).skip(skip).limit(limit).toArray()
+            res.send({result, total})
+            // user ? res.send(result) : res.send({ result, total })
         })
 
         app.get("/foods/:id", async (req, res) => {
@@ -68,6 +75,13 @@ async function run() {
             const data = req.body
             const update = { $set: data }
             const result = await foodCollection.updateOne(query, update)
+            res.send(result)
+        })
+
+        app.delete("/foods/:id", async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await foodCollection.deleteOne(query)
             res.send(result)
         })
 
