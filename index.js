@@ -46,7 +46,7 @@ async function run() {
 
             const total = await foodCollection.countDocuments(query);
             const result = await foodCollection.find(query).skip(skip).limit(limit).toArray()
-            res.send({result, total})
+            res.send({ result, total })
             // user ? res.send(result) : res.send({ result, total })
         })
 
@@ -76,6 +76,25 @@ async function run() {
             const update = { $set: data }
             const result = await foodCollection.updateOne(query, update)
             res.send(result)
+        })
+
+        app.patch("/foods/:id", async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const data = req.body.notes
+
+            const update = {
+                $push: {
+                    notes: data
+                }
+            }
+            const options = { upsert: true }
+            const result = await foodCollection.updateOne(query, update, options)
+            res.send(result)
+
+
+
+
         })
 
         app.delete("/foods/:id", async (req, res) => {
