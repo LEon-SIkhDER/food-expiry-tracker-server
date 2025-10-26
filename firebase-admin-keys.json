@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "food-expiry-tracker-d9c03",
+  "private_key_id": "79fb70f7b361f2169ea361a5a550715fc4bc8311",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDLXhUEhuWW7kwI\nslprh5TaP1DWizP7L5wnXA1OXB5e3kL/xNKn5Pg+vloQjlwWr0JNGNhPHj3zIlxH\nUt4q352Sou+LDrStq6EYLtNzuMLNNxqaNu9QaFi3Ob6UR46unShXBdAEcH9b3Wu5\nR0U1X8fdPdcql9CjjKrGethtjyqPc8biKU72O4rVWMKbhemNBXhCa6eZbgpmcLr7\nqDDLGxsxn+vSpmaaQiHAhljChb15Ye1SK+Ou5fYCe2fZYU7WCby+mFjqKSnUN+vR\n72wf3TXFUCMejmSj5pRqnCzSfhQujgVxBpZ+j2ooPQ4pWP9qn4CL+fFnXuYw7jNJ\nPhd1aRKtAgMBAAECggEAAPcqkzYtS7JIUL1BI863gQ7ALFwixR/vRH3KsWFZoo/V\nS1GeiS/MZ83aKHHMIhH+NwFSOAW30RMoU0Y/29NOAmbLPUm9x5MvmrB7VVjzvHlK\naljZJGZViGDvVLhizhx5SOp7O14p6md8WLCzEdUM8IAmIbjw2NSYcKERSV1s/5tm\nAuRiAZBuXffnx7bXij/CJNLUanJaim1+Kiw08wzU5gCg+vECZXLYeHW8iyzKAP6p\nEqF93RsmT0pgQJic/xMobtRD5nVe43rz5NXZIz2EmyLEdg6+jGQ/6w9G0GDYcC/o\nxK2CKcr3StzWuRtsYIjjDOJl2E0ZFUznIVq4+hjOuQKBgQD9nf1gIYr2IRxNm9SI\nWPwhvmmHRY2POlKwx8Et308Gwas/RXFSV2vIVt7RCv1I1znWbUTHrCJzb8oZjMVx\n/YAYQkyyFz6bXa+rWMlk+1nHPCZulcv2cFTtpjkME2+kr6W2FLoFOWxFnEOrXB31\n86MZdrY89O1DhaKwva9tPAOE9QKBgQDNRzrZgUBxFkn3MoN7r56xV84vdXU1qsCx\nLt2b4nJewvFrhEeQuAWoQ0sOM1zK1n8oUk2HEzsz9HlSQNWzjUk1JWW5MrsBrxeQ\nwTeaU0La/mwcZQcjGh1QwqCHfVqaQO+F73ygG0ZQrxAlzNvV6lL59I5Gduy8mhLd\nC58H5VSD2QJ/JaVN9vcDqYVArkRzR8ntoxSglXO9j4UYwSTlh+md0WLuCHZGW/Ke\nDR7X9C+taSKJc0rE6t6iPoBZf3Fl3YXDfdZZjBXnNSiy6rxDKLommWxUSBX0MKB7\n+sqxrRk1eTyZXG23Lw9XAv4vDUCfMeL4Us9MPcAdd+hePd3qLEy8OQKBgQCpY5Cl\nMGm7p3fLeqxSoN1jW6AxO0xHx6oPyytk2Zwko9pRLStcuO06JqVFh46Xdh4haKC+\nyFi/C4odHJD7A6gYKc7h3oG/5vqcIUQ/nVr6mJ0fZSJZjdAI90E97GuaA+FidPcy\nqq8AHyVE++GfiCeGSI4qiTHag4zzSAannk56KQKBgQD8q4WbccuQ8wtQkBxXcc3E\n0BOhhqZu56Kn3ZdYVMElEekM7YgHLe+0zGbelyNSNk9VOmx63Os55Cjr6i18hJIF\nI0KjQBYFMO1kdBOtdubvq7DylojgJGL16XAP4H8WRm5IHjZP1YSPnBt5b7XInJji\nYlWruIgHYM+/2fPV88XCQw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@food-expiry-tracker-d9c03.iam.gserviceaccount.com",
+  "client_id": "114683276736521957752",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40food-expiry-tracker-d9c03.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

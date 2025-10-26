@@ -9,6 +9,12 @@ app.use(express.json())
 
 const port = process.env.PORT || 3000
 
+
+
+
+
+
+
 app.get("/", (req, res) => {
     res.send("Food Expiry Tracker Server Is running")
 })
@@ -35,27 +41,64 @@ async function run() {
         await client.connect();
         const foodCollection = client.db("foodExpiryDb").collection("foods")
 
+        // all foods 
         app.get("/foods", async (req, res) => {
             const skip = Number(req.query.skip) || 0
             const limit = Number(req.query.limit) || 0
             const user = req.query.email
-            const query = {}
-            if (user) {
-                query.userEmail = user
-            }
+
+            const total = await foodCollection.countDocuments(query);
+            const result = await foodCollection.find().skip(skip).limit(limit).toArray()
+
+            res.send({ result, total })
+        })
+
+        // my items 
+        app.get("/myItems", async (req, res) => {
+            const user = req.query.email
+            const skip = Number(req.query.skip)
+            const limit = Number(req.query.limit)
+            // tokens  
+            const token = req.headers.authorization.split(" ")[1]
+            console.log(token)
+            
+            
+
+            const query = { userEmail: user }
 
             const total = await foodCollection.countDocuments(query);
             const result = await foodCollection.find(query).skip(skip).limit(limit).toArray()
-            res.send({ result, total })
-            // user ? res.send(result) : res.send({ result, total })
+
+            res.send({ total, result })
         })
 
+
+        // food details 
         app.get("/foods/:id", async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
             const result = await foodCollection.findOne(query)
             res.send(result)
 
+        })
+        // nearly expire 6 foods 
+        app.get("/nearlyExpire", async (req, res) => {
+            const limit = Number(req.query.limit) || 0
+            const today = new Date().toISOString()
+
+            const after5Days = new Date()
+            after5Days.setDate(new Date().getDate() + 5)
+
+            const after5DaysIso = after5Days.toISOString()
+
+            const query = {
+                $and: [
+                    { expiryDate: { $lt: after5DaysIso } },
+                    { expiryDate: { $gt: today } }
+                ]
+            }
+            const result = await foodCollection.find(query).sort({ expiryDate: 1 }).limit(limit).toArray()
+            res.send(result)
         })
 
 
@@ -68,7 +111,7 @@ async function run() {
         })
 
 
-
+        // update food 
         app.put("/foods/:id", async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
@@ -77,7 +120,7 @@ async function run() {
             const result = await foodCollection.updateOne(query, update)
             res.send(result)
         })
-
+        // add notes 
         app.patch("/foods/:id", async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
@@ -96,7 +139,7 @@ async function run() {
 
 
         })
-
+        // delete food 
         app.delete("/foods/:id", async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
