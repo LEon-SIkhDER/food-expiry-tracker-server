@@ -2,12 +2,23 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./firebase-service-keys.json");
+
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
 const port = process.env.PORT || 3000
+
+
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
 
 
 
@@ -18,9 +29,21 @@ const port = process.env.PORT || 3000
 app.get("/", (req, res) => {
     res.send("Food Expiry Tracker Server Is running")
 })
+const verifyToken = async (req, res, next) => {
+    const token = req.headers?.authorization?.split(" ")[1]
 
-// 
-// 
+    try {
+        const decoded = await admin.auth().verifyIdToken(token)
+        req.decodedEmail = decoded.email
+        next()
+
+    }
+    catch (error) {
+        res.status(401).send({ message: "Unauthorized Access" })
+    }
+}
+
+
 
 const uri = "mongodb+srv://food-expiry-tracker:h4hKGEHI9W5Y3AXg@cluster0.7hhwads.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -45,24 +68,27 @@ async function run() {
         app.get("/foods", async (req, res) => {
             const skip = Number(req.query.skip) || 0
             const limit = Number(req.query.limit) || 0
-            const user = req.query.email
 
-            const total = await foodCollection.countDocuments(query);
+
+
+            const total = await foodCollection.countDocuments();
             const result = await foodCollection.find().skip(skip).limit(limit).toArray()
 
             res.send({ result, total })
         })
 
         // my items 
-        app.get("/myItems", async (req, res) => {
+        app.get("/myItems", verifyToken, async (req, res) => {
             const user = req.query.email
             const skip = Number(req.query.skip)
             const limit = Number(req.query.limit)
             // tokens  
-            const token = req.headers.authorization.split(" ")[1]
-            console.log(token)
-            
-            
+            // const token = req.headers.authorization.split(" ")[1]
+            if (user !== req.decodedEmail) {
+                return res.status(403).send({ message: "Authenticated but no permission" })
+            }
+
+
 
             const query = { userEmail: user }
 
@@ -102,9 +128,19 @@ async function run() {
         })
 
 
+        // search 
+        app.get("/search", async (req, res) => {
+            const search = req.query.search
+            const query = { name: { $regex: search, $options: "i" } }
+            const total = await foodCollection.countDocuments(query)
+            const result = await foodCollection.find(query).limit(12).toArray()
+            res.send({ result, total })
+        })
 
 
-        app.post("/foods", async (req, res) => {
+
+        // add food 
+        app.post("/foods", verifyToken, async (req, res) => {
             const data = req.body
             const result = await foodCollection.insertOne(data)
             res.send(result)
@@ -146,6 +182,7 @@ async function run() {
             const result = await foodCollection.deleteOne(query)
             res.send(result)
         })
+
 
 
 
