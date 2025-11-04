@@ -84,7 +84,7 @@ async function run() {
             const skip = Number(req.query.skip)
             const limit = Number(req.query.limit)
             // tokens  
-            // const token = req.headers.authorization.split(" ")[1]
+            const token = req.headers.authorization.split(" ")[1]
             if (user !== req.decodedEmail) {
                 return res.status(403).send({ message: "Authenticated but no permission" })
             }
